@@ -23,5 +23,14 @@ jobRoleSelect.addEventListener("change", (e) => {
 });
 
 let designSelect = document.getElementById("design");
+let designThemes = designSelect.children;
 let colorSelect = document.getElementById("color");
 let colorOption = colorSelect.children;
+colorSelect.disabled = true;
+designSelect.addEventListener("change", (e) => {
+  if (e.target.value === "js puns" || e.target.value === "heart js") {
+    colorSelect.removeAttribute("disabled");
+  } else {
+    colorSelect.setAttribute("disabled");
+  }
+});
