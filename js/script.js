@@ -21,3 +21,7 @@ jobRoleSelect.addEventListener("change", (e) => {
     otherJobInput.style.display = "none";
   }
 });
+
+let designSelect = document.getElementById("design");
+let colorSelect = document.getElementById("color");
+let colorOption = colorSelect.children;
