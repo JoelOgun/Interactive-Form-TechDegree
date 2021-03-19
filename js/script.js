@@ -21,16 +21,35 @@ jobRoleSelect.addEventListener("change", (e) => {
     otherJobInput.style.display = "none";
   }
 });
-
+/* To prevent users from selecting an invalid color for a particular theme, the "Color" menu should be disabled by default. Once a theme is selected, the "Color" menu should be enabled, and 
+the color options need to be displayed/hidden based on which theme the user has selected. 
+*/
 let designSelect = document.getElementById("design");
 let designThemes = designSelect.children;
 let colorSelect = document.getElementById("color");
-let colorOption = colorSelect.children;
+let colorOptions = colorSelect.children;
+// Color menu is disabled by default
 colorSelect.disabled = true;
+// Once theme is selected "Color" menu is enabled
 designSelect.addEventListener("change", (e) => {
   if (e.target.value === "js puns" || e.target.value === "heart js") {
     colorSelect.removeAttribute("disabled");
   } else {
     colorSelect.setAttribute("disabled");
+  }
+  /* The color options in the "Color" menu matches with the theme selected in the previous menu 
+  also hides the other options that do not match with theme 
+  */
+  for (let i = 0; i < colorOptions.length; i++) {
+    let themePicked = e.target.value;
+    let colorOption = colorOptions[i];
+    let dataTheme = colorOption.getAttribute("data-theme");
+    if (themePicked === dataTheme) {
+      colorOption.hidden = false;
+      colorOption.selected = true;
+    } else {
+      colorOption.hidden = true;
+      colorOption.selected = false;
+    }
   }
 });
