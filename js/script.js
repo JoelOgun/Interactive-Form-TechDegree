@@ -147,7 +147,12 @@ form.addEventListener("submit", (e) => {
   let regZipCode = /^\d{5}$/;
   let zipCodeValidationTest = regZipCode.test(zipCodeValue);
   if (!zipCodeValidationTest) {
-    alert("Where you live at");
+    e.preventDefault;
   }
   let cVVValue = cVVInput.value;
+  let regCVV = /^[0-9]{3,}$/;
+  let cVVValidationTest = regCVV.test(cVVValue);
+  if (!cVVValidationTest) {
+    alert("what your 3");
+  }
 });
