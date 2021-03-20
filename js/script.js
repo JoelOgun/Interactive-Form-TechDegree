@@ -136,23 +136,26 @@ form.addEventListener("submit", (e) => {
     }
   } 
   */
-  let creditCardValue = creditCardNumber.value;
-  // regExp from w3resource to validate visa card starting with 4 length 13 or 16 digits
-  let regCreditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
-  let creditCardValidationTest = regCreditCard.test(creditCardValue);
-  if (!creditCardValidationTest) {
-    e.preventDefault;
-  }
-  let zipCodeValue = zipCodeInput.value;
-  let regZipCode = /^\d{5}$/;
-  let zipCodeValidationTest = regZipCode.test(zipCodeValue);
-  if (!zipCodeValidationTest) {
-    e.preventDefault;
-  }
-  let cVVValue = cVVInput.value;
-  let regCVV = /^[0-9]{3,}$/;
-  let cVVValidationTest = regCVV.test(cVVValue);
-  if (!cVVValidationTest) {
-    alert("what your 3");
+  // Validate only if credit card is selected
+  if (payWithSelect.value === "credit-card") {
+    let creditCardValue = creditCardNumber.value;
+    // regExp from w3resource to validate visa card starting with 4 length 13 or 16 digits
+    let regCreditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+    let creditCardValidationTest = regCreditCard.test(creditCardValue);
+    if (!creditCardValidationTest) {
+      e.preventDefault;
+    }
+    let zipCodeValue = zipCodeInput.value;
+    let regZipCode = /^\d{5}$/;
+    let zipCodeValidationTest = regZipCode.test(zipCodeValue);
+    if (!zipCodeValidationTest) {
+      e.preventDefault;
+    }
+    let cVVValue = cVVInput.value;
+    let regCVV = /^[0-9]{3,}$/;
+    let cVVValidationTest = regCVV.test(cVVValue);
+    if (!cVVValidationTest) {
+      e.preventDefault;
+    }
   }
 });
