@@ -78,3 +78,29 @@ activitiesFieldset.addEventListener("change", (e) => {
   }
   activitiesCost.innerHTML = `Total : ${totalCost}`;
 });
+
+let payWithSelect = document.getElementById("payment");
+let creditCardDiv = document.getElementById("credit-card");
+let payPalDiv = document.getElementById("paypal");
+let bitCoinDiv = document.getElementById("bitcoin");
+
+payPalDiv.style.display = "none";
+bitCoinDiv.style.display = "none";
+let creditCardSelected = payWithSelect.children[1];
+creditCardSelected.setAttribute("selected", "selected");
+console.log(creditCardSelected);
+
+payWithSelect.addEventListener("change", (e) => {
+  if (e.target.value === "paypal") {
+    payPalDiv.style.display = "block";
+    bitCoinDiv.style.display = "none";
+    creditCardDiv.style.display = "none";
+  } else if (e.target.value === "bitcoin") {
+    bitCoinDiv.style.display = "block";
+    payPalDiv.style.display = "none";
+    creditCardDiv.style.display = "none";
+  } else {
+    payPalDiv.style.display = "none";
+    bitCoinDiv.style.display = "none";
+  }
+});
