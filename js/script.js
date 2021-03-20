@@ -144,5 +144,10 @@ form.addEventListener("submit", (e) => {
     e.preventDefault;
   }
   let zipCodeValue = zipCodeInput.value;
+  let regZipCode = /^\d{5}$/;
+  let zipCodeValidationTest = regZipCode.test(zipCodeValue);
+  if (!zipCodeValidationTest) {
+    alert("Where you live at");
+  }
   let cVVValue = cVVInput.value;
 });
