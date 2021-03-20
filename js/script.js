@@ -104,6 +104,29 @@ payWithSelect.addEventListener("change", (e) => {
     creditCardDiv.style.display = "block";
   }
 });
+// accessibility focus on activity selected and focus go away when selecting another one
+let activitiesInputs = document.querySelectorAll("input[type=checkbox]");
+for (let i = 0; i < activitiesInputs.length; i++) {
+  activitiesInputs[i].addEventListener("focus", (e) => {
+    activitiesInputs[i].parentElement.classList.add("focus");
+  });
+  activitiesInputs[i].addEventListener("blur", (e) => {
+    activitiesInputs[i].parentElement.classList.remove("focus");
+  });
+}
+//
+function validationValid(element) {
+  element.classList.add("valid");
+  element.classList.remove("not-valid");
+  element.lastElementChild.style.display = "none";
+}
+function validationError(element) {
+  element.classList.add("not-valid");
+  element.classList.remove("valid");
+  element.lastElementChild.style.display = "block";
+}
+
+// validate section
 nameInput;
 let emailInput = document.getElementById("email");
 activitiesFieldset;
@@ -117,19 +140,35 @@ form.addEventListener("submit", (e) => {
   let nameValue = nameInput.value;
   let regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
   let nameValidationTest = regName.test(nameValue);
+  let hintName = nameInput.parentElement;
   if (!nameValidationTest) {
+    validationError(hintName);
     e.preventDefault();
+  } else {
+    validationValid(hintName);
   }
   let emailValue = emailInput.value;
   let regEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   let emailValidationTest = regEmail.test(emailValue);
+  let hintEmail = emailInput.parentElement;
   if (!emailValidationTest) {
-    e.preventDefault;
+    validationError(hintEmail);
+    e.preventDefault();
+  } else {
+    validationValid(hintEmail);
   }
   // Validate to pick at least one activity
   let noActivity = 0;
+  let hintActivity = document.getElementById("activities-hint");
+  //let hintActivity = activitiesInputs[i].parentElement;
   if (noActivity === totalCost) {
-    alert("please pick one");
+    hintActivity.parentElement.classList.add("not-valid");
+    hintActivity.parentElement.classList.remove("valid");
+    hintActivity.parentElement.lastElementChild.style.display = "inline";
+  } else {
+    hintActivity.parentElement.classList.remove("not-valid");
+    hintActivity.parentElement.classList.add("valid");
+    hintActivity.parentElement.lastElementChild.style.display = "none";
   }
 
   // Validate only if credit card is selected
@@ -138,20 +177,32 @@ form.addEventListener("submit", (e) => {
     // regExp from w3resource to validate visa card starting with 4 length 13 or 16 digits
     let regCreditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
     let creditCardValidationTest = regCreditCard.test(creditCardValue);
+    let hintCreditCard = creditCardNumber.parentElement;
     if (!creditCardValidationTest) {
+      validationError(hintCreditCard);
       e.preventDefault;
+    } else {
+      validationValid(hintCreditCard);
     }
     let zipCodeValue = zipCodeInput.value;
     let regZipCode = /^\d{5}$/;
     let zipCodeValidationTest = regZipCode.test(zipCodeValue);
+    let hintZipCode = zipCodeInput.parentElement;
     if (!zipCodeValidationTest) {
+      validationError(hintZipCode);
       e.preventDefault;
+    } else {
+      validationValid(hintZipCode);
     }
     let cVVValue = cVVInput.value;
     let regCVV = /^[0-9]{3,}$/;
     let cVVValidationTest = regCVV.test(cVVValue);
+    let hintCVV = cVVInput.parentElement;
     if (!cVVValidationTest) {
+      validationError(hintCVV);
       e.preventDefault;
+    } else {
+      validationValid(hintCVV);
     }
   }
 });
