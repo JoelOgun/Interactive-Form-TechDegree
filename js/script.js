@@ -53,3 +53,28 @@ designSelect.addEventListener("change", (e) => {
     }
   }
 });
+/* 
+The total cost of the selected activities in the "Register for Activities" section 
+should be totaled and displayed for the user. 
+*/
+let activitiesFieldset = document.getElementById("activities");
+let activitiesCost = document.getElementById("activities-cost");
+let totalCost = 0;
+/*  
+When an activity or activities are checked/selected the total cost will be shown
+if an activity/activities are unchecked/ unselected the cost will be updated to show new total cost
+*/
+activitiesFieldset.addEventListener("change", (e) => {
+  let dataCost = e.target.getAttribute("data-cost");
+  if (e.target.checked === true) {
+    // use the + unary plus operator to change data-cost to a number to do the addition
+    totalCost += +dataCost;
+    console.log(totalCost);
+    console.log(e.target.checked);
+  } else {
+    totalCost -= +dataCost;
+    console.log(totalCost);
+    console.log(e.target.checked);
+  }
+  activitiesCost.innerHTML = `Total : ${totalCost}`;
+});
