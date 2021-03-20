@@ -126,16 +126,12 @@ form.addEventListener("submit", (e) => {
   if (!emailValidationTest) {
     e.preventDefault;
   }
-  /* function activityValidator() {
-    if (totalCost !== 0) {
-      alert("thank");
-      return true;
-    } else {
-      alert("please");
-      return false;
-    }
-  } 
-  */
+  // Validate to pick at least one activity
+  let noActivity = 0;
+  if (noActivity === totalCost) {
+    alert("please pick one");
+  }
+
   // Validate only if credit card is selected
   if (payWithSelect.value === "credit-card") {
     let creditCardValue = creditCardNumber.value;
