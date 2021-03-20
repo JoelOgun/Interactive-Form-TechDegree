@@ -88,7 +88,6 @@ payPalDiv.style.display = "none";
 bitCoinDiv.style.display = "none";
 let creditCardSelected = payWithSelect.children[1];
 creditCardSelected.setAttribute("selected", "selected");
-console.log(creditCardSelected);
 
 payWithSelect.addEventListener("change", (e) => {
   if (e.target.value === "paypal") {
@@ -102,5 +101,29 @@ payWithSelect.addEventListener("change", (e) => {
   } else {
     payPalDiv.style.display = "none";
     bitCoinDiv.style.display = "none";
+    creditCardDiv.style.display = "block";
+  }
+});
+nameInput;
+let emailInput = document.getElementById("email");
+activitiesFieldset;
+let creditCardNumber = document.getElementById("cc-num");
+let zipCodeInput = document.getElementById("zip");
+let cVVInput = document.getElementById("cvv");
+let form = document.forms[0];
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let nameValue = nameInput.value;
+  let regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+  let nameValidationTest = regName.test(nameValue);
+  if (!nameValidationTest) {
+    e.preventDefault();
+  }
+  let emailValue = emailInput.value;
+  let regEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  let emailValidationTest = regEmail.test(emailValue);
+  if (!emailValidationTest) {
+    e.preventDefault;
   }
 });
