@@ -126,4 +126,23 @@ form.addEventListener("submit", (e) => {
   if (!emailValidationTest) {
     e.preventDefault;
   }
+  /* function activityValidator() {
+    if (totalCost !== 0) {
+      alert("thank");
+      return true;
+    } else {
+      alert("please");
+      return false;
+    }
+  } 
+  */
+  let creditCardValue = creditCardNumber.value;
+  // regExp from w3resource to validate visa card starting with 4 length 13 or 16 digits
+  let regCreditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+  let creditCardValidationTest = regCreditCard.test(creditCardValue);
+  if (!creditCardValidationTest) {
+    e.preventDefault;
+  }
+  let zipCodeValue = zipCodeInput.value;
+  let cVVValue = cVVInput.value;
 });
