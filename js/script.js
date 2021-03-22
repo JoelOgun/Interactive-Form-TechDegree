@@ -1,4 +1,3 @@
-console.log("Hello World");
 // Set the focus property and highlight the input element under the Name label
 let nameInput = document.getElementById("name");
 nameInput.focus();
@@ -78,7 +77,7 @@ activitiesFieldset.addEventListener("change", (e) => {
   }
   activitiesCost.innerHTML = `Total : ${totalCost}`;
 });
-
+/* The credit card payment displayed by default  while the other payment form sections are hidden until they are selected . */
 let payWithSelect = document.getElementById("payment");
 let creditCardDiv = document.getElementById("credit-card");
 let payPalDiv = document.getElementById("paypal");
@@ -104,7 +103,8 @@ payWithSelect.addEventListener("change", (e) => {
     creditCardDiv.style.display = "block";
   }
 });
-// accessibility focus on activity selected and focus go away when selecting another one
+/* accessibility focus on activity selected and focus go away when selecting another one. 
+It is more obvious which activity is selected */
 let activitiesInputs = document.querySelectorAll("input[type=checkbox]");
 for (let i = 0; i < activitiesInputs.length; i++) {
   activitiesInputs[i].addEventListener("focus", (e) => {
@@ -114,7 +114,7 @@ for (let i = 0; i < activitiesInputs.length; i++) {
     activitiesInputs[i].parentElement.classList.remove("focus");
   });
 }
-//
+// Form validation function instead of adding classlist and removing to each element. DRY Principle
 function validationValid(element) {
   element.classList.add("valid");
   element.classList.remove("not-valid");
@@ -126,7 +126,7 @@ function validationError(element) {
   element.lastElementChild.style.display = "block";
 }
 
-// validate section
+// validate section prevent submit if invaild
 nameInput;
 let emailInput = document.getElementById("email");
 activitiesFieldset;
@@ -134,7 +134,7 @@ let creditCardNumber = document.getElementById("cc-num");
 let zipCodeInput = document.getElementById("zip");
 let cVVInput = document.getElementById("cvv");
 let form = document.forms[0];
-
+// name field validation
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   let nameValue = nameInput.value;
@@ -147,6 +147,7 @@ form.addEventListener("submit", (e) => {
   } else {
     validationValid(hintName);
   }
+  // email field validation
   let emailValue = emailInput.value;
   let regEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   let emailValidationTest = regEmail.test(emailValue);
