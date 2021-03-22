@@ -78,6 +78,7 @@ activitiesFieldset.addEventListener("change", (e) => {
     console.log(e.target.checked);
   }
   activitiesCost.innerHTML = `Total : $ ${totalCost}`;
+  // extra credit. Prevent selecting events that are on the same day and time
   let dataDateTime = e.target.getAttribute("data-day-and-time");
   let selected = e.target;
   for (let i = 0; i < activitiesInputs[i].length; i++) {
@@ -150,11 +151,11 @@ let creditCardNumber = document.getElementById("cc-num");
 let zipCodeInput = document.getElementById("zip");
 let cVVInput = document.getElementById("cvv");
 let form = document.forms[0];
-// name field validation
+// Form field validation
 form.addEventListener("submit", (e) => {
-  e.preventDefault();
+  // name field validation
   let nameValue = nameInput.value;
-  let regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+  let regName = /^[a-zA-Z ]{2,50}$/;
   let nameValidationTest = regName.test(nameValue);
   let hintName = nameInput.parentElement;
   if (!nameValidationTest) {
@@ -192,7 +193,7 @@ form.addEventListener("submit", (e) => {
   if (payWithSelect.value === "credit-card") {
     let creditCardValue = creditCardNumber.value;
     // regExp from w3resource to validate visa card starting with 4 length 13 or 16 digits
-    let regCreditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+    let regCreditCard = /^[0-9]{13,16}$/;
     let creditCardValidationTest = regCreditCard.test(creditCardValue);
     let hintCreditCard = creditCardNumber.parentElement;
     if (!creditCardValidationTest) {
