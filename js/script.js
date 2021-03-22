@@ -81,16 +81,16 @@ activitiesFieldset.addEventListener("change", (e) => {
   // extra credit. Prevent selecting events that are on the same day and time
   let dataDateTime = e.target.getAttribute("data-day-and-time");
   let selected = e.target;
-  for (let i = 0; i < activitiesInputs[i].length; i++) {
+  for (let i = 0; i < activitiesInputs.length; i++) {
     if (
       dataDateTime === activitiesInputs[i].getAttribute("data-day-and-time") &&
       selected !== activitiesInputs[i]
     ) {
       activitiesInputs[i].disabled = true;
-      activitiesInputs.parentElement.classList.add("disabled");
+      activitiesInputs[i].parentElement.classList.add("disabled");
     } else {
       activitiesInputs[i].disabled = false;
-      activitiesInputs.parentElement.classList.remove("disabled");
+      activitiesInputs[i].parentElement.classList.remove("disabled");
     }
   }
 });
@@ -151,6 +151,8 @@ let creditCardNumber = document.getElementById("cc-num");
 let zipCodeInput = document.getElementById("zip");
 let cVVInput = document.getElementById("cvv");
 let form = document.forms[0];
+let submitBtn = document.querySelector("button[type=submit]");
+
 // Form field validation
 form.addEventListener("submit", (e) => {
   // name field validation
@@ -165,6 +167,7 @@ form.addEventListener("submit", (e) => {
     validationValid(hintName);
   }
   // email field validation
+
   let emailValue = emailInput.value;
   let regEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   let emailValidationTest = regEmail.test(emailValue);
@@ -175,6 +178,7 @@ form.addEventListener("submit", (e) => {
   } else {
     validationValid(hintEmail);
   }
+
   // Validate to pick at least one activity
   let noActivity = 0;
   let hintActivity = document.getElementById("activities-hint");
@@ -222,5 +226,12 @@ form.addEventListener("submit", (e) => {
     } else {
       validationValid(hintCVV);
     }
+  }
+});
+submitBtn.addEventListener("submit", (e) => {
+  if (validationValid() && noActivity !== totalCost) {
+    return true;
+  } else {
+    return false;
   }
 });
