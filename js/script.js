@@ -59,6 +59,8 @@ should be totaled and displayed for the user.
 let activitiesFieldset = document.getElementById("activities");
 let activitiesCost = document.getElementById("activities-cost");
 let totalCost = 0;
+let activitiesInputs = document.querySelectorAll("input[type=checkbox]");
+
 /*  
 When an activity or activities are checked/selected the total cost will be shown
 if an activity/activities are unchecked/ unselected the cost will be updated to show new total cost
@@ -75,7 +77,21 @@ activitiesFieldset.addEventListener("change", (e) => {
     console.log(totalCost);
     console.log(e.target.checked);
   }
-  activitiesCost.innerHTML = `Total : ${totalCost}`;
+  activitiesCost.innerHTML = `Total : $ ${totalCost}`;
+  let dataDateTime = e.target.getAttribute("data-day-and-time");
+  let selected = e.target;
+  for (let i = 0; i < activitiesInputs[i].length; i++) {
+    if (
+      dataDateTime === activitiesInputs[i].getAttribute("data-day-and-time") &&
+      selected !== activitiesInputs[i]
+    ) {
+      activitiesInputs[i].disabled = true;
+      activitiesInputs.parentElement.classList.add("disabled");
+    } else {
+      activitiesInputs[i].disabled = false;
+      activitiesInputs.parentElement.classList.remove("disabled");
+    }
+  }
 });
 /* The credit card payment displayed by default  while the other payment form sections are hidden until they are selected . */
 let payWithSelect = document.getElementById("payment");
@@ -105,7 +121,7 @@ payWithSelect.addEventListener("change", (e) => {
 });
 /* accessibility focus on activity selected and focus go away when selecting another one. 
 It is more obvious which activity is selected */
-let activitiesInputs = document.querySelectorAll("input[type=checkbox]");
+//let activitiesInputs = document.querySelectorAll("input[type=checkbox]");
 for (let i = 0; i < activitiesInputs.length; i++) {
   activitiesInputs[i].addEventListener("focus", (e) => {
     activitiesInputs[i].parentElement.classList.add("focus");
