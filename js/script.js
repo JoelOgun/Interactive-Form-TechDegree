@@ -153,11 +153,33 @@ let cVVInput = document.getElementById("cvv");
 let form = document.forms[0];
 let submitBtn = document.querySelector("button[type=submit]");
 
+function creditCardValidTest(creditCardNumber) {
+  let creditCardValue = creditCardNumber.value;
+  // regExp from w3resource to validate visa card starting with 4 length 13 or 16 digits
+  let regCreditCard = /^[0-9]{13,16}$/;
+  let creditCardValidationTest = regCreditCard.test(creditCardValue);
+  return creditCardValidationTest;
+}
+
+function zipCodeValidTest(zipCodeInput) {
+  let zipCodeValue = zipCodeInput.value;
+  let regZipCode = /^\d{5}$/;
+  let zipCodeValidationTest = regZipCode.test(zipCodeValue);
+  return zipCodeValidationTest;
+}
+
+function cVVValidTest(cVVInput) {
+  let cVVValue = cVVInput.value;
+  let regCVV = /^[0-9]{3,}$/;
+  let cVVValidationTest = regCVV.test(cVVValue);
+  return cVVValidationTest;
+}
+
 // Form field validation
 form.addEventListener("submit", (e) => {
   // name field validation
   let nameValue = nameInput.value;
-  let regName = /^[a-zA-Z ]{2,50}$/;
+  let regName = /^[a-zA-Z ]{1,50}$/;
   let nameValidationTest = regName.test(nameValue);
   let hintName = nameInput.parentElement;
   if (!nameValidationTest) {
@@ -166,8 +188,8 @@ form.addEventListener("submit", (e) => {
   } else {
     validationValid(hintName);
   }
-  // email field validation
 
+  // email field validation
   let emailValue = emailInput.value;
   let regEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   let emailValidationTest = regEmail.test(emailValue);
@@ -182,19 +204,45 @@ form.addEventListener("submit", (e) => {
   // Validate to pick at least one activity
   let noActivity = 0;
   let hintActivity = document.getElementById("activities-hint");
-  //let hintActivity = activitiesInputs[i].parentElement;
+  let pHintActivity = hintActivity.parentElement;
   if (noActivity === totalCost) {
-    hintActivity.parentElement.classList.add("not-valid");
-    hintActivity.parentElement.classList.remove("valid");
-    hintActivity.parentElement.lastElementChild.style.display = "inline";
+    //hintActivity.parentElement.classList.add("not-valid");
+    //hintActivity.parentElement.classList.remove("valid");
+    //hintActivity.parentElement.lastElementChild.style.display = "inline";
+    e.preventDefault();
+    validationError(pHintActivity);
   } else {
-    hintActivity.parentElement.classList.remove("not-valid");
-    hintActivity.parentElement.classList.add("valid");
-    hintActivity.parentElement.lastElementChild.style.display = "none";
+    //hintActivity.parentElement.classList.remove("not-valid");
+    //hintActivity.parentElement.classList.add("valid");
+    //hintActivity.parentElement.lastElementChild.style.display = "none";
+    validationValid(pHintActivity);
   }
-
+  let creditCardIsUsed = creditCardValidTest(e.target);
+  let hintCreditCard = creditCardNumber.parentElement;
+  if (creditCardIsUsed !== true) {
+    validationError(hintCreditCard);
+    e.preventDefault;
+  } else {
+    validationValid(hintCreditCard);
+  }
+  let zipCodeIsUsed = zipCodeValidTest(e.target);
+  let hintZipCode = zipCodeInput.parentElement;
+  if (zipCodeIsUsed !== true) {
+    validationError(hintZipCode);
+    e.preventDefault;
+  } else {
+    validationValid(hintZipCode);
+  }
+  let cVVIsUsed = cVVValidTest(e.target);
+  let hintCVV = cVVInput.parentElement;
+  if (cVVIsUsed !== true) {
+    validationError(hintCVV);
+    e.preventDefault;
+  } else {
+    validationValid(hintCVV);
+  }
   // Validate only if credit card is selected
-  if (payWithSelect.value === "credit-card") {
+  /*if (payWithSelect.value === "credit-card") {
     let creditCardValue = creditCardNumber.value;
     // regExp from w3resource to validate visa card starting with 4 length 13 or 16 digits
     let regCreditCard = /^[0-9]{13,16}$/;
@@ -227,11 +275,14 @@ form.addEventListener("submit", (e) => {
       validationValid(hintCVV);
     }
   }
+   else if (payWithSelect.value === "paypal") {
+    validationValid(payPalDiv);
+  } else if (payWithSelect.value === "bitcoin") {
+    validationValid(bitCoinDiv);
+  } */
 });
-submitBtn.addEventListener("submit", (e) => {
-  if (validationValid() && noActivity !== totalCost) {
-    return true;
-  } else {
-    return false;
+
+/* submitBtn.addEventListener("submit", (e) => {
+  
   }
-});
+ */
