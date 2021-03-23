@@ -153,7 +153,7 @@ let cVVInput = document.getElementById("cvv");
 let form = document.forms[0];
 let submitBtn = document.querySelector("button[type=submit]");
 
-function creditCardValidTest(creditCardNumber) {
+/* function creditCardValidTest(creditCardNumber) {
   let creditCardValue = creditCardNumber.value;
   // regExp from w3resource to validate visa card starting with 4 length 13 or 16 digits
   let regCreditCard = /^[0-9]{13,16}$/;
@@ -173,7 +173,7 @@ function cVVValidTest(cVVInput) {
   let regCVV = /^[0-9]{3,}$/;
   let cVVValidationTest = regCVV.test(cVVValue);
   return cVVValidationTest;
-}
+} */
 
 // Form field validation
 form.addEventListener("submit", (e) => {
@@ -217,6 +217,7 @@ form.addEventListener("submit", (e) => {
     //hintActivity.parentElement.lastElementChild.style.display = "none";
     validationValid(pHintActivity);
   }
+  /* 
   let creditCardIsUsed = creditCardValidTest(e.target);
   let hintCreditCard = creditCardNumber.parentElement;
   if (creditCardIsUsed !== true) {
@@ -240,9 +241,9 @@ form.addEventListener("submit", (e) => {
     e.preventDefault;
   } else {
     validationValid(hintCVV);
-  }
+  } */
   // Validate only if credit card is selected
-  /*if (payWithSelect.value === "credit-card") {
+  if (payWithSelect.value === "credit-card") {
     let creditCardValue = creditCardNumber.value;
     // regExp from w3resource to validate visa card starting with 4 length 13 or 16 digits
     let regCreditCard = /^[0-9]{13,16}$/;
@@ -274,12 +275,11 @@ form.addEventListener("submit", (e) => {
     } else {
       validationValid(hintCVV);
     }
-  }
-   else if (payWithSelect.value === "paypal") {
+  } else if (payWithSelect.value === "paypal") {
     validationValid(payPalDiv);
   } else if (payWithSelect.value === "bitcoin") {
     validationValid(bitCoinDiv);
-  } */
+  }
 });
 
 /* submitBtn.addEventListener("submit", (e) => {
