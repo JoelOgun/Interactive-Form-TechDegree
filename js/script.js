@@ -81,16 +81,28 @@ activitiesFieldset.addEventListener("change", (e) => {
   // extra credit. Prevent selecting events that are on the same day and time
   let dataDateTime = e.target.getAttribute("data-day-and-time");
   let selected = e.target;
-  for (let i = 0; i < activitiesInputs.length; i++) {
-    if (
-      dataDateTime === activitiesInputs[i].getAttribute("data-day-and-time") &&
-      selected !== activitiesInputs[i]
-    ) {
-      activitiesInputs[i].disabled = true;
-      activitiesInputs[i].parentElement.classList.add("disabled");
-    } else {
-      activitiesInputs[i].disabled = false;
-      activitiesInputs[i].parentElement.classList.remove("disabled");
+  if (selected.checked) {
+    for (let i = 0; i < activitiesInputs.length; i++) {
+      if (
+        dataDateTime ===
+          activitiesInputs[i].getAttribute("data-day-and-time") &&
+        selected !== activitiesInputs[i]
+      ) {
+        activitiesInputs[i].disabled = true;
+        activitiesInputs[i].parentElement.classList.add("disabled");
+      }
+    }
+  } else {
+    for (let i = 0; i < activitiesInputs.length; i++) {
+      if (
+        dataDateTime ===
+          activitiesInputs[i].getAttribute("data-day-and-time") &&
+        selected !== activitiesInputs[i]
+      ) {
+        activitiesInputs[i].disabled = false;
+        activitiesInputs[i].parentElement.classList.remove("disabled");
+        activitiesInputs[i].parentElement.classList.add("abled");
+      }
     }
   }
 });
@@ -131,6 +143,57 @@ for (let i = 0; i < activitiesInputs.length; i++) {
     activitiesInputs[i].parentElement.classList.remove("focus");
   });
 }
+// validate section prevent submit if invaild
+nameInput;
+let emailInput = document.getElementById("email");
+activitiesFieldset;
+let creditCardNumber = document.getElementById("cc-num");
+let zipCodeInput = document.getElementById("zip");
+let cVVInput = document.getElementById("cvv");
+let form = document.forms[0];
+let submitBtn = document.querySelector("button[type=submit]");
+
+// name field validation
+const nameValidating = () => {
+  let nameValue = nameInput.value;
+  let regName = /^[a-zA-Z ]{1,50}$/;
+  let nameValidationTest = regName.test(nameValue);
+  return nameValidationTest;
+};
+// email validation
+const emailValidating = () => {
+  let emailValue = emailInput.value;
+  let regEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  let emailValidationTest = regEmail.test(emailValue);
+  return emailValidationTest;
+};
+// at least one activity is selected before submitting
+const activityValidating = () => {
+  let noActivity = 0;
+  let activityValidationTest = totalCost > noActivity;
+  return activityValidationTest;
+};
+// credit card number is valid 13-16 digits
+const cardCreditNumValidating = () => {
+  let creditCardValue = creditCardNumber.value;
+  let regCreditCard = /^[0-9]{13,16}$/;
+  let creditCardValidationTest = regCreditCard.test(creditCardValue);
+  return creditCardValidationTest;
+};
+// 5 digit zip code validation
+const zipCodeValidating = () => {
+  let zipCodeValue = zipCodeInput.value;
+  let regZipCode = /^\d{5}$/;
+  let zipCodeValidationTest = regZipCode.test(zipCodeValue);
+  return zipCodeValidationTest;
+};
+// CVV is 3 digits validation
+const cVVValidating = () => {
+  let cVVValue = cVVInput.value;
+  let regCVV = /^[0-9]{3,}$/;
+  let cVVValidationTest = regCVV.test(cVVValue);
+  return cVVValidationTest;
+};
 // Form validation function instead of adding classlist and removing to each element. DRY Principle
 function validationValid(element) {
   element.classList.add("valid");
@@ -142,16 +205,61 @@ function validationError(element) {
   element.classList.remove("valid");
   element.lastElementChild.style.display = "block";
 }
+let hintName = nameInput.parentElement;
+let hintEmail = emailInput.parentElement;
+let hintActivity = document.getElementById("activities-hint");
+let pHintActivity = hintActivity.parentElement;
+let hintCreditCard = creditCardNumber.parentElement;
+let hintZipCode = zipCodeInput.parentElement;
+let hintCVV = cVVInput.parentElement;
 
-// validate section prevent submit if invaild
-nameInput;
-let emailInput = document.getElementById("email");
-activitiesFieldset;
-let creditCardNumber = document.getElementById("cc-num");
-let zipCodeInput = document.getElementById("zip");
-let cVVInput = document.getElementById("cvv");
-let form = document.forms[0];
-let submitBtn = document.querySelector("button[type=submit]");
+// Form should not submit until all required field is valid
+form.addEventListener("submit", (e) => {
+  if (!nameValidating()) {
+    validationError(hintName);
+    e.preventDefault();
+  } else {
+    validationValid(hintName);
+  }
+  if (!emailValidating()) {
+    validationError(hintEmail);
+    e.preventDefault();
+  } else {
+    validationValid(hintEmail);
+  }
+  if (!activityValidating()) {
+    //hintActivity.parentElement.classList.add("not-valid");
+    //hintActivity.parentElement.classList.remove("valid");
+    //hintActivity.parentElement.lastElementChild.style.display = "inline";
+    validationError(pHintActivity);
+    e.preventDefault();
+  } else {
+    //hintActivity.parentElement.classList.remove("not-valid");
+    //hintActivity.parentElement.classList.add("valid");
+    //hintActivity.parentElement.lastElementChild.style.display = "none";
+    validationValid(pHintActivity);
+  }
+  if (payWithSelect.value === "credit-card") {
+    if (!cardCreditNumValidating()) {
+      validationError(hintCreditCard);
+      e.preventDefault();
+    } else {
+      validationValid(hintCreditCard);
+    }
+    if (!zipCodeValidating()) {
+      validationError(hintZipCode);
+      e.preventDefault();
+    } else {
+      validationValid(hintZipCode);
+    }
+    if (!cVVValidating()) {
+      validationError(hintCVV);
+      e.preventDefault();
+    } else {
+      validationValid(hintCVV);
+    }
+  }
+});
 
 /* function creditCardValidTest(creditCardNumber) {
   let creditCardValue = creditCardNumber.value;
@@ -175,7 +283,9 @@ function cVVValidTest(cVVInput) {
   return cVVValidationTest;
 } */
 
-// Form field validation
+/*
+
+// Form field validation on submit 
 form.addEventListener("submit", (e) => {
   // name field validation
   let nameValue = nameInput.value;
@@ -205,19 +315,19 @@ form.addEventListener("submit", (e) => {
   let noActivity = 0;
   let hintActivity = document.getElementById("activities-hint");
   let pHintActivity = hintActivity.parentElement;
-  if (noActivity === totalCost) {
+  if (totalCost === noActivity) {
     //hintActivity.parentElement.classList.add("not-valid");
     //hintActivity.parentElement.classList.remove("valid");
     //hintActivity.parentElement.lastElementChild.style.display = "inline";
-    e.preventDefault();
     validationError(pHintActivity);
+    e.preventDefault();
   } else {
     //hintActivity.parentElement.classList.remove("not-valid");
     //hintActivity.parentElement.classList.add("valid");
     //hintActivity.parentElement.lastElementChild.style.display = "none";
     validationValid(pHintActivity);
   }
-  /* 
+
   let creditCardIsUsed = creditCardValidTest(e.target);
   let hintCreditCard = creditCardNumber.parentElement;
   if (creditCardIsUsed !== true) {
@@ -241,7 +351,7 @@ form.addEventListener("submit", (e) => {
     e.preventDefault;
   } else {
     validationValid(hintCVV);
-  } */
+  } 
   // Validate only if credit card is selected
   if (payWithSelect.value === "credit-card") {
     let creditCardValue = creditCardNumber.value;
@@ -280,9 +390,16 @@ form.addEventListener("submit", (e) => {
   } else if (payWithSelect.value === "bitcoin") {
     validationValid(bitCoinDiv);
   }
-});
-
+});  */
 /* submitBtn.addEventListener("submit", (e) => {
-  
+  if (
+    validationValid(hintName) &&
+    validationValid(hintEmail) &&
+  ) {
+    return true;
+  }  else {
+    return false;
+    e.preventDefault;
   }
- */
+});
+*/
